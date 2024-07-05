@@ -85,4 +85,19 @@ class Planillas extends Controller
 
     }
 
+    public function changeEstado(Request $request){
+        try {
+            $planilla = PlanillaModel::where(['id' => $request->id])->first();  
+            $planilla->estado = $request->estado;
+            $planilla->notas  = $request->notas;
+            $planilla->save();
+
+            return back()->with('msg','Petición procesada con exito.');
+
+        } catch (\Throwable $th) {
+            return back()->with('msg','Error al procesar la petición');
+        }
+
+    }
+
 }

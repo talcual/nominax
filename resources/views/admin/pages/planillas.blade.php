@@ -28,6 +28,7 @@
                                 <th>ID</th>
                                 <th>Fecha</th>
                                 <th>Salario Bruto</th>
+                                <th>Estado</th>
                                 <th>Opciones</th>
                             </tr> 
                         </thead>
@@ -38,6 +39,7 @@
                                     <td>{{ $planilla->id }}</td>
                                     <td>{{ $planilla->fecha_verificacion }}</td>
                                     <td>{{ $planilla->salario_bruto }}</td>
+                                    <td>{{ $planilla->estado}}</td>
                                     <td>
                                         @if(Auth::user()->level != 'admin')
                                             <button class="btn btn-primary" onclick="addEmpleado({{ json_encode($planilla) }})" data-bs-toggle="modal" data-bs-target="#addToPlanilla">Add Empleados</button>
@@ -45,6 +47,7 @@
                                             <a class="btn btn-danger" href="{{ route('admin.delete.planilla',[$planilla->id]) }}">borrar</button>
                                         @else
                                             <button class="btn btn-success" onclick="verPlanilla({{ $planilla->id }});"> ver planilla </button>
+                                            <button class="btn btn-primary" onclick="changeEstado({{ json_encode($planilla) }})" data-bs-toggle="modal" data-bs-target="#cambioEstado">Actualizar estado</button>
                                         @endif
 
                                     </td>   
@@ -150,6 +153,45 @@
 </div> 
 
 
+<div class="modal fade" id="cambioEstado" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Actualizar estado</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body" id="planilla_body">
+          <form action="{{ route('admin.update.estado.planilla') }}" method="post">
+          @csrf
+                <div class="mb-3">
+                    <label for="fecha" class="form-label">Seleccionar estado</label>
+                    <select name="estado" class="form-control">
+                        <option></option>
+                        <option value="pendiente">Pendiente</option>
+                        <option value="en proceso">En Proceso</option>
+                        <option value="pagada">Pagada</option>
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label for="fecha" class="form-label">Seleccionar estado</label>
+                    <textarea name="notas" id="" class="form-control"></textarea>
+                </div>
+
+                <input type="hidden" name="id" id="planillaId">
+
+                <div class="mb-3 d-flex justify-content-center">
+                    <button type="submit" class="btn btn-primary pull-right">Cambiar Estado</button>
+                </div>
+
+          </form>
+      </div>
+    </div>
+  </div>
+</div> 
+
+
+
 <script>
 
     const myModal = new bootstrap.Modal('#planillaView', {
@@ -165,6 +207,9 @@
         document.querySelector('#create_empleado_form').reset();
     }
 
+    function changeEstado(planilla){
+        document.querySelector('#planillaId').value = planilla.id;
+    }
 
     async function verPlanilla(planilla){
 

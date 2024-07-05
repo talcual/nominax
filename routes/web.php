@@ -42,10 +42,12 @@ Route::name('admin.')->prefix('admin')->group(function () {
 
     Route::post('add_empleado_planilla', [Planillas::class, 'addEmpleado'])->name('agregar.empleado.planilla')->middleware('auth:sanctum');
     Route::get('ver_planilla/{planilla}', [Planillas::class, 'viewPlanilla'])->name('ver.planilla')->middleware('auth:sanctum');
+    Route::post('update_planilla', [Planillas::class, 'changeEstado'])->name('update.estado.planilla')->middleware('auth:sanctum');
+
 
     Route::get('empleados', [Empleados::class, 'index'])->name('empleados')->middleware('auth:sanctum');
     Route::post('crear_empleado', [Empleados::class, 'create'])->name('create.empleado')->middleware('auth:sanctum');
-    Route::get('delete_empleado/{id}', [Empleados::class, 'delete'])->name('delete.empleado')->middleware('auth:sanctum');
+    Route::post('delete_empleado/{id}', [Empleados::class, 'delete'])->name('delete.empleado')->middleware('auth:sanctum');
 
     Route::get('usuarios', [Usuarios::class, 'index'])->name('usuarios')->middleware('auth:sanctum');
     Route::post('crear_usuario', [Usuarios::class, 'addUser'])->name('create.usuario')->middleware('auth:sanctum');
