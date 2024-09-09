@@ -14,6 +14,9 @@ Nominax es un controlador liquidación de horas trabajadas escrito en PHP/Larave
 - Actualización de estados de planillas.
 - Pronto mas opciones
 
+## Premios
+
+<script src="https://www.phpclasses.org/browse/package/13284/format/badge.js"> </script>
 
 ## License
 
